@@ -11,7 +11,7 @@
 char gameBoard[3][3];
 // state that determines whose play it is
 int p1;
-int turns, win;
+int turns, win, draw;
 
 int main(int argc, char* argv[])
 {
@@ -43,22 +43,29 @@ int playing()
 	{
 		if(c != '\n')
 		{
-			// if no winner, keep playing
-			if(!win)
+			placeChoice(c);
+			// if draw, start a new game
+			if(draw)
 			{
-				placeChoice(c);
+				printf("There has been a draw\n");
+				return 1;
 			}
-			// else, declare the winner
-			else
+			if(win)
 			{
+				// the opposite player is set after a turn is taken,
+				// so if p1 = 1, then player 2 placed the winning symbol
+				// and vice versa
 				if(p1)
-				{
-					printf("Player 1 wins!\n");
-				}
-				else
 				{
 					printf("Player 2 wins!\n");
 				}
+				else
+				{
+					printf("Player 1 wins!\n");
+				}
+				
+				return 1;
+
 			}
 		}
 	}
@@ -71,7 +78,10 @@ void init()
 {
 	// player one goes first
 	p1 = 1;
-	turns, win = 0;
+	turns = 0;
+	win = 0;
+	draw = 0;
+
 	printf("To enter a spot on the board, input the number (1-9) that corresponds to the space on the board\n");
 	printf(" 1 | 2 | 3\n 4 | 5 | 6\n 7 | 8 | 9\n");
 	putchar('\n');
@@ -82,7 +92,7 @@ void init()
 	{
 		for(int j = 0; j < 3; j++)
 		{
-			gameBoard[i][j] = ' ';
+			gameBoard[j][i] = ' ';
 		}
 	}
 
@@ -94,7 +104,8 @@ void placeChoice(char choice)
 {
 	// get the numeric form of choice
 	int play = choice - '0';
-	int row, col = 0;
+	int row = 0;
+	int col = 0;
 
 	// the board is a 2d array with 3 rows & 3 columns
 	// the input for each column needs to be 0-2,
@@ -105,8 +116,8 @@ void placeChoice(char choice)
 		// first set the play to be within the range of 0-1
 		play-=1;
 		// then get corresponding row and column
-		row = play / 3;
-		col = play % 3;
+		row = play % 3;
+		col = play / 3;
 		// printf("%d	%d  \n", row, col);
 		// test for emptiness, place respective symbol if so
 		if(p1 && gameBoard[row][col] == ' ')
@@ -125,7 +136,7 @@ void placeChoice(char choice)
 		}
 		else
 		{
-			printBoard(gameBoard);
+			//printBoard(gameBoard);
 			printf("Selection not empty\n");
 		}
 
@@ -143,9 +154,37 @@ void placeChoice(char choice)
 
 }
 
-int checkForWin()
+void checkForWin()
 {
+	// the number of turns should only go up when a symbol is placed
+	// so when turns = 9, a draw is made
+	// or there is a win
+	if(turns == 9 && !win)
+	{
+		draw = 1;
+	}
 
+	if(gameBoard[0][0] == 'x' && gameBoard[0][1] == 'x' && gameBoard [0][2] == 'x' || gameBoard[0][0] == 'o' && gameBoard[0][1] == 'o' && gameBoard [0][2] == 'o')
+	{
+		win = 1;
+	}
+	else if(gameBoard[1][0] == 'x' && gameBoard[1][1] == 'x' && gameBoard [1][2] == 'x' || gameBoard[1][0] == 'o' && gameBoard[1][1] == 'o' && gameBoard [1][2] == 'o')
+	{
+		win = 1;
+	}
+	else if(gameBoard[2][0] == 'x' && gameBoard[2][1] == 'x' && gameBoard [2][2] == 'x' || gameBoard[2][0] == 'o' && gameBoard[2][1] == 'o' && gameBoard [2][2] == 'o')
+	{
+		win = 1;
+	}
+	
+	if(gameBoard[0][0] == 'x' && gameBoard[1][0] == 'x' && gameBoard [2][0] == 'x' || gameBoard[0][0] == 'o' && gameBoard[1][0] == 'o' && gameBoard [2][0] == 'o')
+	{
+		win = 1;
+	}
+	if(gameBoard[1][0] == 'x' && gameBoard[1][1] == 'x' && gameBoard [1][0] == 'x' || gameBoard[0][0] == 'o' && gameBoard[1][0] == 'o' && gameBoard [2][0] == 'o')
+	{
+		win = 1;
+	}
 }
 
 void printBoard(char board[][3])
@@ -158,11 +197,11 @@ void printBoard(char board[][3])
 		{
 			if(j == 2)
 			{
-				printf("%c", board[i][j]);
+				printf("%c", board[j][i]);
 			}
 			else
 			{
-				printf("%c | ", board[i][j]);
+				printf("%c | ", board[j][i]);
 			}
 		}
 

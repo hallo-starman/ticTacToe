@@ -7,4 +7,4 @@ int playing();
 void placeChoice(char choice);
 void init();
 void printBoard(char board[][3]);
-int checkForWin();
+void checkForWin();
