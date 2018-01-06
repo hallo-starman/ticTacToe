@@ -164,24 +164,40 @@ void checkForWin()
 		draw = 1;
 	}
 
-	if(gameBoard[0][0] == 'x' && gameBoard[0][1] == 'x' && gameBoard [0][2] == 'x' || gameBoard[0][0] == 'o' && gameBoard[0][1] == 'o' && gameBoard [0][2] == 'o')
+	// columns
+	if((gameBoard[0][0] == 'x' && gameBoard[0][1] == 'x' && gameBoard [0][2] == 'x') || (gameBoard[0][0] == 'o' && gameBoard[0][1] == 'o' && gameBoard [0][2] == 'o'))
 	{
 		win = 1;
 	}
-	else if(gameBoard[1][0] == 'x' && gameBoard[1][1] == 'x' && gameBoard [1][2] == 'x' || gameBoard[1][0] == 'o' && gameBoard[1][1] == 'o' && gameBoard [1][2] == 'o')
+	else if((gameBoard[1][0] == 'x' && gameBoard[1][1] == 'x' && gameBoard [1][2] == 'x') || (gameBoard[1][0] == 'o' && gameBoard[1][1] == 'o' && gameBoard [1][2] == 'o'))
 	{
 		win = 1;
 	}
-	else if(gameBoard[2][0] == 'x' && gameBoard[2][1] == 'x' && gameBoard [2][2] == 'x' || gameBoard[2][0] == 'o' && gameBoard[2][1] == 'o' && gameBoard [2][2] == 'o')
+	else if((gameBoard[2][0] == 'x' && gameBoard[2][1] == 'x' && gameBoard [2][2] == 'x') || (gameBoard[2][0] == 'o' && gameBoard[2][1] == 'o' && gameBoard [2][2] == 'o'))
 	{
 		win = 1;
 	}
 	
-	if(gameBoard[0][0] == 'x' && gameBoard[1][0] == 'x' && gameBoard [2][0] == 'x' || gameBoard[0][0] == 'o' && gameBoard[1][0] == 'o' && gameBoard [2][0] == 'o')
+	// rows
+	if((gameBoard[0][0] == 'x' && gameBoard[1][0] == 'x' && gameBoard [2][0] == 'x') || (gameBoard[0][0] == 'o' && gameBoard[1][0] == 'o' && gameBoard [2][0] == 'o'))
 	{
 		win = 1;
 	}
-	if(gameBoard[1][0] == 'x' && gameBoard[1][1] == 'x' && gameBoard [1][0] == 'x' || gameBoard[0][0] == 'o' && gameBoard[1][0] == 'o' && gameBoard [2][0] == 'o')
+	else if((gameBoard[0][1] == 'x' && gameBoard[1][1] == 'x' && gameBoard [2][1] == 'x') || (gameBoard[0][1] == 'o' && gameBoard[1][1] == 'o' && gameBoard [2][1] == 'o'))
+	{
+		win = 1;
+	}
+	else if((gameBoard[0][2] == 'x' && gameBoard[1][2] == 'x' && gameBoard [2][2] == 'x') || (gameBoard[0][2] == 'o' && gameBoard[1][2] == 'o' && gameBoard [2][2] == 'o'))
+	{
+		win = 1;
+	}
+
+	// diagonal
+	if((gameBoard[0][0] == 'x' && gameBoard[1][1] == 'x' && gameBoard [2][2] == 'x') || (gameBoard[0][0] == 'o' && gameBoard[1][1] == 'o' && gameBoard [2][2] == 'o'))
+	{
+		win = 1;
+	}
+	else if((gameBoard[2][0] == 'x' && gameBoard[1][1] == 'x' && gameBoard [0][2] == 'x') || (gameBoard[2][0] == 'o' && gameBoard[1][1] == 'o' && gameBoard [0][2] == 'o'))
 	{
 		win = 1;
 	}
